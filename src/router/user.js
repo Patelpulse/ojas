@@ -4,9 +4,9 @@ const auth = require("../middlewere/Auth.js");
 
 const router = express.Router();
 
-router.post("/", registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", auth, logoutUser);
-router.get("/me", auth, getUser);
+router.get("/profile", auth, getUser);
 
 module.exports = router;

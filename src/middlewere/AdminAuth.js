@@ -10,8 +10,9 @@ const auth = (req, res, next) => {
         req.admin = decodedToken;
         next();
     } catch (error) {
-        console.error("Admin authentication error:", error.message);
+        console.error("Admin auth full error stack:", error.stack);
         res.status(500).json({ message: error.message });
     }
+
 }
 module.exports = auth;

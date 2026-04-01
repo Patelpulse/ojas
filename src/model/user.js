@@ -27,6 +27,18 @@ const userSchema = new mongoose.Schema(
             enum: ["male", "female", "other"],
             required: true,
         },
+        
+        mobile: {
+            type: String,
+            required: [true, "Mobile number is required"],
+            unique: true,
+        },
+
+        bio: {
+            type: String,
+            default: "Shopping Enthusiast",
+        },
+
 
         photo: {
             type: String, // store URL (Cloudinary / local path)

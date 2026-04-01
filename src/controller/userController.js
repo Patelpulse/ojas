@@ -4,9 +4,9 @@ const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password, gender } = req.body;
-
-        if (!name || !email || !password || !gender) {
+        const { name, email, password, gender, mobile, bio } = req.body;
+        console.log("Register data:", req.body);
+        if (!name || !email || !password || !gender || !mobile) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -20,8 +20,11 @@ const registerUser = async (req, res) => {
             name,
             email,
             password: hashpass,
-            gender
+            gender,
+            mobile,
+            bio: bio || "New User"
         });
+
 
         console.log("User registered successfully:", user._id);
         res.status(201).json({ data: user });
@@ -52,7 +55,7 @@ const loginUser = async (req, res) => {
         console.log("User logged in successfully:", user._id);
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        res.cookie("token", token, { httpOnly: true, secure: true, maxAge: 60 * 60 * 1000 });
+        res.cookie("token", token, { httpOnly: true, secure: false, maxAge: 60 * 60 * 1000 });
 
         res.status(200).json({ data: user, token: token, message: "User logged in successfully" });
     } catch (error) {
@@ -77,7 +80,7 @@ const getUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        res.status(200).json({ data: user });
+        res.status(200).json({ data: user, message: "User found successfully" });
     } catch (error) {
         console.error("Get user error:", error.message);
         res.status(500).json({ message: error.message });
