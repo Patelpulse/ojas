@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema(
             type: String, // store URL (Cloudinary / local path)
             default: "",
         },
+        
+        role: {
+            type: String,
+            enum: ["user", "admin", "vendor"],
+            default: "user",
+        },
     },
     {
         timestamps: true,

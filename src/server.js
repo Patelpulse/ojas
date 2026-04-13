@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const connect = require("./config/connection.js");
 const userRoute = require("./router/user.js");
 const adminRoute = require("./router/AdminRoute.js");
+const vendorRoute = require("./router/VendorRoute.js");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -12,7 +13,10 @@ const PORT = process.env.PORT || 5001;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 // Basic Route
 app.get("/", (req, res) => {
@@ -22,6 +26,7 @@ app.get("/", (req, res) => {
 // Main Routes
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/vendor", vendorRoute);
 
 // Start Server
 connect().then(() => {

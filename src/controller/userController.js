@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
     try {
-        const { name, email, password, gender, mobile, bio } = req.body;
+        const { name, email, password, gender, mobile, bio, role } = req.body;
         console.log("Register data:", req.body);
         if (!name || !email || !password || !gender || !mobile) {
             return res.status(400).json({ message: "All fields are required" });
@@ -22,7 +22,8 @@ const registerUser = async (req, res) => {
             password: hashpass,
             gender,
             mobile,
-            bio: bio || "New User"
+            bio: bio || "New User",
+            role: role || "user"
         });
 
 
@@ -87,4 +88,13 @@ const getUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, getUser };
+const getVendors = async (req, res) => {
+    try {
+        const vendors = await User.find({ role: "vendor" });
+        res.status(200).json({ data: vendors });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { registerUser, loginUser, logoutUser, getUser, getVendors };

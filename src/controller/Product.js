@@ -8,7 +8,7 @@ const createProduct = async (req, res) => {
             return res.status(401).json({ message: "Admin context missing. Please login again." });
         }
         console.log("console_1");
-        const { name, title, price, description, category, stock, rating, numReviews } = req.body;
+        const { name, title, price, description, category, stock, rating, numReviews, brand } = req.body;
         console.log("console_2", req.body);
         let imageUrl = "";
         if (req.file) {
@@ -48,6 +48,7 @@ const createProduct = async (req, res) => {
             stock,
             rating,
             numReviews,
+            brand,
             user: req.admin.id
         });
 
